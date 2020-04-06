@@ -1,0 +1,19 @@
+{
+  "name": "wallpaper_backend",
+  "version": "1.0.0",
+  "description": "Wallpaper backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinhv/wallpaper_backend.git"
+  },
+  "author": "Thinh Vo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinhv/wallpaper_backend/issues"
+  },
+  "homepage": "https://github.com/thinhv/wallpaper_backend#readme"
+}
