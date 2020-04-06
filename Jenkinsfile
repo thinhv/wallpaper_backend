@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
+            image 'node:14.1.0-alpine3.10'
+            args '-p 3000:3000 -u root:root'
         }
     }
     environment {
@@ -16,6 +16,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'chmod +x ./jenkins/scripts/test.sh'
                 sh './jenkins/scripts/test.sh'
             }
         }
