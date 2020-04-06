@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/thinhv/wallpaper_backend/issues"
   },
-  "homepage": "https://github.com/thinhv/wallpaper_backend#readme"
+  "homepage": "https://github.com/thinhv/wallpaper_backend#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
+    "sinon": "^9.0.2"
+  }
 }
