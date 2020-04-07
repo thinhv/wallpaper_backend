@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - data-volume:/data/db
+      - config-volume:/data/configdb
+volumes:
+  data-volume:
+  config-volume:
