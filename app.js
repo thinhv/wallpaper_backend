@@ -24,5 +24,5 @@ app.use(
 );
 
 db.on('connected', () => {
-  app.listen(3000, () => console.log(`App listening on port ${PORT}!`));
+  app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
 });
