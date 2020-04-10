@@ -8,12 +8,14 @@ const schema = buildSchema(`
     type User {
         id: ID!
         username: String!
+        email: String!
         firstName: String!
         lastName: String!
         isVerified: Boolean!
         bio: String
         userType: String!
         profileImageURL: String
+        token: String!
     }
     type Post {
         id: ID!
@@ -24,6 +26,10 @@ const schema = buildSchema(`
     type Query {
         users: [User!]!
         user(id: Int!): User
+        login(username: String!, password: String!): User
+    }
+    type Mutation {
+        registerUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!, bio: String): User
     }
 `);
 

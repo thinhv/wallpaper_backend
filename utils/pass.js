@@ -48,8 +48,3 @@ passport.use(
     }
   )
 );
-
-module.exports = {
-  login,
-  checkAuth,
-};
