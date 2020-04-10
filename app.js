@@ -1,5 +1,6 @@
 'use strict';
 require('dotenv').config();
+require('./utils/pass');
 const express = require('express');
 var graphqlHTTP = require('express-graphql');
 const db = require('./db');
@@ -14,14 +15,14 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.use(
-  '/graphql',
+app.use('/graphql', (req, res) => {
   graphqlHTTP({
     schema: schema,
     rootValue: resolvers,
     graphiql: true,
-  })
-);
+    context: { req, res },
+  })(req, res);
+});
 
 db.on('connected', () => {
   app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
