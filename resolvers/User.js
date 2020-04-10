@@ -37,13 +37,13 @@ const UserOne = {
 };
 
 const registerUser = async (args, { req, res }) => {
-  const existingUser = User.findOne({
+  const userExists = await User.exists({
     username: args.username,
     email: args.email,
   });
 
-  if (existingUser !== undefined) {
-    throw Error(``);
+  if (userExists) {
+    throw new Error('User already exists');
   }
 
   const hash = await bcrypt.hash(args.password, saltRound);
