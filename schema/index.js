@@ -1,6 +1,8 @@
 const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
+    scalar Upload
+
     enum UserType {
         admin
         user
@@ -30,6 +32,7 @@ const schema = buildSchema(`
     }
     type Mutation {
         registerUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!, bio: String): User
+        upload(file: Upload!, description: String): String
     }
 `);
 

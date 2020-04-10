@@ -1,3 +1,7 @@
+const { GraphQLUpload } = require('graphql-upload');
+
 module.exports = {
-  ...require('./User.js'),
+  Upload: GraphQLUpload,
+  ...require('./User'),
+  ...require('./Upload'),
 };
