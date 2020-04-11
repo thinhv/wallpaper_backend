@@ -1,4 +1,5 @@
 const fs = require('fs');
+const uploadMethod = require('../utils/FileUploader');
 
 const storeFS = ({ stream, filename }) => {
   const uploadDir = __dirname + '/../media/photos';
@@ -18,14 +19,11 @@ const storeFS = ({ stream, filename }) => {
 };
 
 const upload = async (args, _) => {
-  console.log('Hello world');
   const { file, description } = args;
   const { filename, mimetype, createReadStream } = await file.file;
-  console.log(file);
   const stream = createReadStream();
-  const pathObj = await storeFS({ stream, filename });
-  const fileLocation = pathObj.path;
-  return fileLocation;
+  const data = await uploadMethod(stream, filename, mimetype);
+  return data.Location; // <--- image url
 };
 
 module.exports = {
