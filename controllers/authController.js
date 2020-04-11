@@ -8,7 +8,8 @@ const login = (req, res) => {
     passport.authenticate(
       'local',
       { session: false },
-      async (err, user, info) => {
+      async (err, jwt_payload, info) => {
+        const user = jwt_payload._doc;
         try {
           if (err || !user) {
             reject(info.message);
@@ -18,7 +19,7 @@ const login = (req, res) => {
               reject(err);
             }
             const token = jwt.sign(user, process.env.SECRET);
-            resolve({ user: user._doc, token });
+            resolve({ user: user, token });
           });
         } catch (e) {
           reject(e.message);
