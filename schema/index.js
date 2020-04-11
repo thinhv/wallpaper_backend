@@ -7,6 +7,7 @@ const schema = buildSchema(`
         admin
         user
     }
+
     type User {
         id: ID!
         username: String!
@@ -19,20 +20,31 @@ const schema = buildSchema(`
         profileImageURL: String
         token: String
     }
+
     type Post {
-        id: ID!
+        _id: ID!
         imageUrl: String!
-        description: UserType
-        likeByUserIds: [User]
+        description: String!
+        likedByUsers: [User]
+        postedByUser: User
+        likedByMe: Boolean
     }
+
     type Query {
         user(id: ID!): User
         login(username: String!, password: String!): User
+        posts: [Post]
+        post(id: ID): Post
     }
+
     type Mutation {
         registerUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!, bio: String): User
         updateUser(bio: String, firstName: String!, lastName: String!): User
         upload(file: Upload!, description: String): String
+        createPost(file: Upload!, description: String): Post
+        updatePost(id: String, description: String): Post
+        deletePost(id: String): Post
+        likePost(id: String): Post
     }
 `);
 
