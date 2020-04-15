@@ -2,6 +2,7 @@
 require('dotenv').config();
 require('./utils/pass');
 const express = require('express');
+const cors = require('cors');
 var graphqlHTTP = require('express-graphql');
 const db = require('./db');
 const app = express();
@@ -11,6 +12,8 @@ const { graphqlUploadExpress } = require('graphql-upload');
 
 // Constants
 const PORT = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World');
