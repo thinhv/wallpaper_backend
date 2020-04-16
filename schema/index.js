@@ -28,6 +28,7 @@ const schema = buildSchema(`
         likedByUsers: [User]
         postedByUser: User
         likedByMe: Boolean
+        createdAt: String
     }
 
     type Query {
