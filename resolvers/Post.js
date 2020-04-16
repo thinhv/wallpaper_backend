@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 const fs = require('fs');
-const upload = require('../utils/FileUploader');
+const { uploadImage, deleteImage } = require('../utils/ImageService');
 const authController = require('../controllers/authController');
 const mongoose = require('mongoose');
 
@@ -30,7 +30,7 @@ const createPost = async (args, { req, res }) => {
   const { file, description } = args;
   const { filename, mimetype, createReadStream } = await file.file;
   const stream = createReadStream();
-  const data = await upload(stream, filename, mimetype);
+  const data = await uploadImage(stream, filename, mimetype);
 
   const user = await authController.checkAuth(req, res);
 

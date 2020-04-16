@@ -1,5 +1,5 @@
 const fs = require('fs');
-const uploadMethod = require('../utils/FileUploader');
+const { uploadImage, deleteImage } = require('../utils/ImageService');
 
 const storeFS = ({ stream, filename }) => {
   const uploadDir = __dirname + '/../media/photos';
@@ -22,7 +22,7 @@ const upload = async (args, _) => {
   const { file, description } = args;
   const { filename, mimetype, createReadStream } = await file.file;
   const stream = createReadStream();
-  const data = await uploadMethod(stream, filename, mimetype);
+  const data = await uploadImage(stream, filename, mimetype);
   return data.Location; // <--- image url
 };
 

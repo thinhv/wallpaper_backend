@@ -17,7 +17,7 @@ const schema = buildSchema(`
         isVerified: Boolean!
         bio: String
         userType: String!
-        profileImageURL: String
+        profileImageUrl: String
         token: String
     }
 
@@ -40,6 +40,7 @@ const schema = buildSchema(`
     type Mutation {
         registerUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!, bio: String): User
         updateUser(bio: String, firstName: String!, lastName: String!): User
+        updateUserImage(file: Upload): User
         upload(file: Upload!, description: String): String
         createPost(file: Upload!, description: String): Post
         updatePost(id: String, description: String): Post

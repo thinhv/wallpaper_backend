@@ -2,6 +2,7 @@ const User = require('../models/User');
 const authController = require('../controllers/authController');
 const bcrypt = require('bcrypt');
 const saltRound = 12;
+const { uploadImage, deleteImage } = require('../utils/ImageService')
 
 const user = async ({ id }, _) => {
   console.log(id);
@@ -40,6 +41,21 @@ const registerUser = async (args, { req, res }) => {
   }
 };
 
+const updateUserImage = (args, {req, res}) => {
+  const user = await authController.checkAuth(req, res)
+  if (user.profileImageUrl) {
+    deleteImage(user.profileImageUrl)
+  }
+  const { file } = args;
+  const { filename, mimetype, createReadStream } = await file.file;
+  const { Location } = await uploadImage(createReadStream(), filename, mimetype);
+  return await User.findByIdAndUpdate(
+    user._id,
+    { profileImageUrl: Location },
+    { new: true }
+  );
+}
+
 const login = async (args, { req, res }) => {
   req.body = args;
   const authResponse = await authController.login(req, res);
@@ -64,4 +80,5 @@ module.exports = {
   login,
   registerUser,
   updateUser,
+  updateUserImage
 };
