@@ -3,6 +3,10 @@ const { buildSchema } = require('graphql');
 const schema = buildSchema(`
     scalar Upload
 
+    type DummyFile {
+        url: String
+    }
+
     enum UserType {
         admin
         user
@@ -42,7 +46,7 @@ const schema = buildSchema(`
         registerUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!, bio: String): User
         updateUser(bio: String, firstName: String!, lastName: String!): User
         updateUserImage(file: Upload): User
-        upload(file: Upload!, description: String): String
+        upload(file: Upload!, description: String): DummyFile
         createPost(file: Upload!, description: String): Post
         updatePost(id: String, description: String): Post
         deletePost(id: String): Post

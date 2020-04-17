@@ -4,4 +4,5 @@ module.exports = {
   Upload: GraphQLUpload,
   ...require('./User.js'),
   ...require('./Post.js'),
+  ...require('./Upload'),
 };

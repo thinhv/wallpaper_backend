@@ -23,7 +23,8 @@ const upload = async (args, _) => {
   const { filename, mimetype, createReadStream } = await file.file;
   const stream = createReadStream();
   const data = await uploadImage(stream, filename, mimetype);
-  return data.Location; // <--- image url
+  console.log(data);
+  return { url: data.Location }; // <--- image url
 };
 
 module.exports = {
