@@ -5,7 +5,12 @@ const authController = require('../controllers/authController');
 const mongoose = require('mongoose');
 
 const posts = async (args, { req, res }) => {
-  const posts = await Post.find().populate('postedByUser');
+  const start = args.start || 0;
+  const limit = args.limit || 10;
+  const posts = await Post.find()
+    .skip(start)
+    .limit(limit)
+    .populate('postedByUser');
 
   try {
     const user = await authController.checkAuth(req, res);

@@ -34,7 +34,7 @@ const schema = buildSchema(`
     type Query {
         user(id: ID!): User
         login(username: String!, password: String!): User
-        posts: [Post]
+        posts(start: Int, limit: Int): [Post]
         post(id: ID): Post
     }
 
