@@ -9,6 +9,8 @@ const app = express();
 const resolvers = require('./resolvers');
 const schema = require('./schema');
 const { graphqlUploadExpress } = require('graphql-upload');
+const imageService = require('./utils/ImageService');
+const authController = require('./controllers/authController');
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -27,7 +29,7 @@ app.use(
       schema: schema,
       rootValue: resolvers,
       graphiql: true,
-      context: { req, res },
+      context: { req, res, authController, imageService },
     })(req, res);
   }
 );

@@ -1,10 +1,9 @@
 const Post = require('../models/Post');
 const fs = require('fs');
 const { uploadImage, deleteImage } = require('../utils/ImageService');
-const authController = require('../controllers/authController');
 const mongoose = require('mongoose');
 
-const posts = async (args, { req, res }) => {
+const posts = async (args, { req, res, authController }) => {
   const start = args.start || 0;
   const limit = args.limit || 10;
   const posts = await Post.find()
@@ -25,13 +24,12 @@ const posts = async (args, { req, res }) => {
   }
 };
 
-const post = async (args, { req, res }) => {
+const post = async (args, _) => {
   const post = await Post.findById(args.id).populate('postedByUser');
-
   return post;
 };
 
-const createPost = async (args, { req, res }) => {
+const createPost = async (args, { req, res, authController }) => {
   const { file, description } = args;
   const { filename, mimetype, createReadStream } = await file.file;
   const stream = createReadStream();
@@ -48,7 +46,7 @@ const createPost = async (args, { req, res }) => {
   return post;
 };
 
-const updatePost = async (args, { req, res }) => {
+const updatePost = async (args, { req, res, authController }) => {
   const user = await authController.checkAuth(req, res);
 
   const post = await Post.findById(args.id);
@@ -62,7 +60,7 @@ const updatePost = async (args, { req, res }) => {
   }
 };
 
-const deletePost = async (args, { req, res }) => {
+const deletePost = async (args, { req, res, authController }) => {
   const user = await authController.checkAuth(req, res);
 
   const post = await Post.findById(args.id);
@@ -75,7 +73,7 @@ const deletePost = async (args, { req, res }) => {
   }
 };
 
-const likePost = async (args, { req, res }) => {
+const likePost = async (args, { req, res, authController }) => {
   const user = await authController.checkAuth(req, res);
   const post = await Post.findById(args.id);
 

@@ -1,16 +1,13 @@
 const User = require('../models/User');
-const authController = require('../controllers/authController');
 const bcrypt = require('bcrypt');
 const saltRound = 12;
-const { uploadImage, deleteImage } = require('../utils/ImageService');
 
 const user = async ({ id }, _) => {
-  console.log(id);
   const user = await User.findById(id);
   return user;
 };
 
-const registerUser = async (args, { req, res }) => {
+const registerUser = async (args, { req, res, authController }) => {
   const userExists = await User.exists({
     username: args.username,
     email: args.email,
@@ -41,17 +38,17 @@ const registerUser = async (args, { req, res }) => {
   }
 };
 
-const updateUserImage = async (args, { req, res }) => {
+const updateUserImage = async (
+  args,
+  { req, res, authController, imageService }
+) => {
   const user = await authController.checkAuth(req, res);
-  console.log(user);
   if (user.profileImageUrl) {
-    console.log(`user.profileImageUrl:`);
-    console.log(user.profileImageUrl);
-    deleteImage(user.profileImageUrl);
+    await imageService.deleteImage(user.profileImageUrl);
   }
   const { file } = args;
   const { filename, mimetype, createReadStream } = await file.file;
-  const { Location } = await uploadImage(
+  const { Location } = await imageService.uploadImage(
     createReadStream(),
     filename,
     mimetype
@@ -63,7 +60,7 @@ const updateUserImage = async (args, { req, res }) => {
   );
 };
 
-const login = async (args, { req, res }) => {
+const login = async (args, { req, res, authController }) => {
   req.body = args;
   const authResponse = await authController.login(req, res);
   return {
@@ -73,7 +70,10 @@ const login = async (args, { req, res }) => {
   };
 };
 
-const updateUser = async ({ bio, firstName, lastName }, { req, res }) => {
+const updateUser = async (
+  { bio, firstName, lastName },
+  { req, res, authController }
+) => {
   const user = await authController.checkAuth(req, res);
   return await User.findByIdAndUpdate(
     user._id,
