@@ -19,7 +19,7 @@ pipeline {
             agent {
                 docker {
                     image 'node:12.16.3'
-                    args '-p 3000:3000 -u root:root'
+                    args '-p 3001:3001 -u root:root'
                 }
             }
             steps {
