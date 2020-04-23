@@ -7,8 +7,8 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'node:14.1.0-alpine3.10'
-                    args '-p 3000:3000 -u root:root'
+                    image 'node:12.16.3'
+                    args '-p 3001:3001 -u root:root'
                 }
             }
             steps {
@@ -18,7 +18,7 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'node:14.1.0-alpine3.10'
+                    image 'node:12.16.3'
                     args '-p 3000:3000 -u root:root'
                 }
             }
