@@ -1,7 +1,6 @@
 'use strict';
 
 const Post = require('../models/Post');
-const User = require('../models/User');
 const { ObjectId } = require('mongoose').Types;
 
 const fs = require('fs');
@@ -93,20 +92,9 @@ const likePost = async (args, { req, res, authController }) => {
   return post;
 };
 
-const postsByUsername = async ({ username }, _) => {
-  const user = await User.findOne({ username });
-  if (!user) {
-    throw new Error('User not found by id');
-  }
-  return Post.find({ postedByUser: new ObjectId(user._id) }).populate(
-    'postedByUser'
-  );
-};
-
 module.exports = {
   posts,
   post,
-  postsByUsername,
   createPost,
   updatePost,
   deletePost,

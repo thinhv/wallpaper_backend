@@ -37,12 +37,17 @@ const schema = buildSchema(`
         createdAt: String
     }
 
+    type UserProfile {
+        user: User!
+        posts: [Post]
+    }
+
     type Query {
         user(id: ID!): User
         login(username: String!, password: String!): User
         posts(start: Int, limit: Int): [Post]
         post(id: ID): Post
-        postsByUsername(username: String!): [Post]
+        userProfile(username: String!): UserProfile
     }
 
     type Mutation {
