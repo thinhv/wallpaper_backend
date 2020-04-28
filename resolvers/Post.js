@@ -1,4 +1,9 @@
+'use strict';
+
 const Post = require('../models/Post');
+const User = require('../models/User');
+const { ObjectId } = require('mongoose').Types;
+
 const fs = require('fs');
 const { uploadImage, deleteImage } = require('../utils/ImageService');
 const mongoose = require('mongoose');
@@ -14,9 +19,7 @@ const posts = async (args, { req, res, authController }) => {
   try {
     const user = await authController.checkAuth(req, res);
     return posts.map((post) => {
-      post.likedByMe = post.likedByUsers.includes(
-        mongoose.Types.ObjectId(user._id)
-      );
+      post.likedByMe = post.likedByUsers.includes(new ObjectId(user._id));
       return post;
     });
   } catch (error) {
@@ -77,9 +80,7 @@ const likePost = async (args, { req, res, authController }) => {
   const user = await authController.checkAuth(req, res);
   const post = await Post.findById(args.id);
 
-  likeIndex = await post.likedByUsers.indexOf(
-    mongoose.Types.ObjectId(user._id)
-  );
+  likeIndex = await post.likedByUsers.indexOf(new ObjectId(user._id));
 
   if (likeIndex > -1) {
     post.likedByUsers.splice(likeIndex, 1);
@@ -92,9 +93,20 @@ const likePost = async (args, { req, res, authController }) => {
   return post;
 };
 
+const postsByUsername = async ({ username }, _) => {
+  const user = await User.find({ username });
+  if (!user) {
+    throw new Error('User not found by id');
+  }
+  return Post.find({ postedByUser: new ObjectId(user._id) }).populate(
+    'postedByUser'
+  );
+};
+
 module.exports = {
   posts,
   post,
+  postsByUsername,
   createPost,
   updatePost,
   deletePost,

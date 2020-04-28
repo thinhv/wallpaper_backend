@@ -1,3 +1,5 @@
+'use strict';
+
 const { GraphQLUpload } = require('graphql-upload');
 
 module.exports = {

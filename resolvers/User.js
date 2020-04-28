@@ -1,3 +1,5 @@
+'use strict';
+
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const saltRound = 12;

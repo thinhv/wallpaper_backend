@@ -1,3 +1,5 @@
+'use strict';
+
 const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
@@ -40,6 +42,7 @@ const schema = buildSchema(`
         login(username: String!, password: String!): User
         posts(start: Int, limit: Int): [Post]
         post(id: ID): Post
+        postsByUsername(username: String!): [Post]
     }
 
     type Mutation {
