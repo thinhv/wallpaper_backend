@@ -2,6 +2,7 @@
 
 const User = require('../models/User');
 const Post = require('../models/Post');
+
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 const saltRound = 12;
@@ -90,10 +91,10 @@ const userProfile = async ({ username, _ }) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    throw new Error('User not found by id');
+    throw new Error('User not found by username');
   }
 
-  posts = Post.find({ postedByUser: new ObjectId(user._id) }).populate(
+  const posts = Post.find({ postedByUser: new ObjectId(user._id) }).populate(
     'postedByUser'
   );
 
