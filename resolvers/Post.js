@@ -94,7 +94,7 @@ const likePost = async (args, { req, res, authController }) => {
 };
 
 const postsByUsername = async ({ username }, _) => {
-  const user = await User.find({ username });
+  const user = await User.findOne({ username });
   if (!user) {
     throw new Error('User not found by id');
   }
