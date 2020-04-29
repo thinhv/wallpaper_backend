@@ -77,19 +77,16 @@ const deletePost = async (args, { req, res, authController }) => {
 
 const likePost = async (args, { req, res, authController }) => {
   const user = await authController.checkAuth(req, res);
-  const post = await Post.findById(args.id);
+  let post = await Post.findById(args.id);
 
-  likeIndex = await post.likedByUsers.indexOf(new ObjectId(user._id));
+  const likeIndex = await post.likedByUsers.indexOf(new ObjectId(user._id));
 
   if (likeIndex > -1) {
     post.likedByUsers.splice(likeIndex, 1);
   } else {
     post.likedByUsers.push(user._id);
   }
-
-  await post.save();
-
-  return post;
+  return await post.save();
 };
 
 module.exports = {

@@ -31,7 +31,7 @@ const schema = buildSchema(`
         _id: ID!
         imageUrl: String!
         description: String
-        likedByUsers: [User]
+        likedByUsers: [ID]
         postedByUser: User
         likedByMe: Boolean
         createdAt: String
