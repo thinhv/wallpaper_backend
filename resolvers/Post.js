@@ -12,6 +12,7 @@ const posts = async (args, { req, res, authController }) => {
   const limit = args.limit || 10;
   const posts = await Post.find()
     .skip(start)
+    .sort({ createdAt: -1 })
     .limit(limit)
     .populate('postedByUser');
 
