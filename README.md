@@ -1,6 +1,6 @@
 # Node.js Project
 
-[![Build Status](https://jenkins.muzify.eu/job/wallpaper-nodejs/badge/icon)](https://jenkins.muzify.eu/job/wallpaper-nodejs/)
+[![Build Status](https://jenkins.muzify.eu/buildStatus/icon?job=wallpaper-nodejs)](https://jenkins.muzify.eu/job/wallpaper-nodejs/)
 
 Simple Node.js + GraphQL app in which user can discover & share beautiful images.
 The backend is deployed at [backend.muzify.eu](https://backend.muzify.eu/graphql)
