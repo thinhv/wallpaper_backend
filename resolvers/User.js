@@ -1,4 +1,9 @@
+'use strict';
+
 const User = require('../models/User');
+const Post = require('../models/Post');
+
+const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 const saltRound = 12;
 
@@ -82,10 +87,28 @@ const updateUser = async (
   );
 };
 
+const userProfile = async ({ username, _ }) => {
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    throw new Error('User not found by username');
+  }
+
+  const posts = Post.find({ postedByUser: new ObjectId(user._id) }).populate(
+    'postedByUser'
+  );
+
+  return {
+    user,
+    posts,
+  };
+};
+
 module.exports = {
   user,
   login,
   registerUser,
   updateUser,
   updateUserImage,
+  userProfile,
 };
